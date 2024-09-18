@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    
+    int a,b;
+    double div;
+    do{
+        printf("inserisci il primo numero: ");
+        scanf("%d", &a);
+        
+        printf("inserisci il secondo numero: ");
+        scanf("%d", &b);
+        
+        if(a>b){
+            
+            div= (double)b / (double)a;
+        }else{
+            div=(double)a / (double)b;
+        }
+        printf("\n il risulato e' %f \n \n",div);
+    }while(a != 0 && b != 0);
+    
+    
+    return 0;
+}
