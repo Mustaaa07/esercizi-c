@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    
+    int a,b;
+    int molt;
+    int somma=0;
+    
+    do{
+        printf("inserisci il primo numero: ");
+        scanf("%d", &a);
+        
+        printf("inserisci il secondo numero: ");
+        scanf("%d", &b);
+        
+        molt= a*b;
+        printf("il prodotto e': %d \n \n",molt);
+        
+        somma=somma+molt;
+        
+    }while(a != 0 && b != 0);
+    
+    printf("la somma e': %d \n",somma);
+    
+    return 0;
+}
