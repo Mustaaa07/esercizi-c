@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <math.h>
+int main() {
+    
+    int a,b;
+    double rapporto;
+    double radice;
+    do{
+        printf("inserisci a:");
+        scanf("%d", &a);
+        
+        printf("inserisci b:");
+        scanf("%d", &b);
+        
+        if(a>b){
+            rapporto=(double)a/(double)b;
+            
+        }else{
+            rapporto=(double)b/(double)a;
+        }
+        if(rapporto>0){
+        radice = sqrt(rapporto);
+        printf("la radice quadrata del rapporto e': %f\n ",radice);
+        }
+        
+    }while(rapporto>0);
+    printf("non è possibile calcolare la radice quadrata di un numero negativo. ");
+    return 0;
+}
