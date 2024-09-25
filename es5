@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    int a,b,c;
+    int somma=0;
+    int pari=0;
+    int dispari=0;
+    int null=0;
+    int differenza=0;
+    
+    do{
+        printf("inserisci a: ");
+        scanf("%d", &a);
+        printf("inserisci b: ");
+        scanf("%d", &b);
+        printf("inserisci c: ");
+        scanf("%d", &c);
+        
+        somma=a+b;
+        differenza = a-b;
+        
+        if(differenza % 2 == 0){
+            pari++;
+            
+        }else {
+            dispari++;
+            
+        }if(differenza == 0){
+            null++;
+        }
+        
+    }while(somma>=c);
+    
+    printf("il numero di volte che la differenza è pari: %d \n",pari);
+    printf("il numero di volte che la differenza è dispari: %d \n",dispari);
+    printf("il numero di volte che la differenza è nulla: %d \n ",null);
+        
+        
+
+    return 0;
+}
