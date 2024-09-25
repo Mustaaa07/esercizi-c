@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 int main() {
-    int a,b;
-    float media=0;
+    int i=0,somma=0,a,b,n;
+    double media=0;
     
     do{
         printf("inserisci a: ");
