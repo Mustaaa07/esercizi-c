@@ -1,21 +1,17 @@
 #include <stdio.h>
-
 int main(int argc, char *argv[])
 {
-
-	int n, contatore = 0;
-	do
-	{
-		printf("inserisci un numero: \n");
-		scanf("%d", &n);
-	} while (n <= 0);
-
-	do
-	{
-		contatore++;
-		printf("%d\n", contatore);
-
-	} while (contatore < n);
-
-	return 0;
+    int N;
+    
+    do
+    {
+        printf("Inserisci N: ");
+        scanf("%d", &N);
+    }while(N<=0);
+    
+    for(int i=1; i<N; i++)
+    {
+        printf("%d\n", i);
+    }
+return 0;    
 }
