@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+
+	int n, contatore = 0;
+	do
+	{
+		printf("inserisci un numero: \n");
+		scanf("%d", &n);
+	} while (n <= 0);
+
+	do
+	{
+		contatore++;
+		printf("%d\n", contatore);
+
+	} while (contatore < n);
+
+	return 0;
+}
