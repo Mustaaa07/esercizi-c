@@ -31,8 +31,9 @@ int main(int argc, char *argv[]) {
             printf("Hai inserito un numero negativo\n");
         }
 
-    }while();
-    
+    }while (i < n && numero >= 0);
+
+    printf("La somma è: %f", somma);
     
     
     return 0;
