@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+  
+    int n1,n2;
+    
+    do{
+        
+        printf("Inserisci n1: ");
+        scanf("%d", &n1);
+        printf("Inserisci n2: ");
+        scanf("%d", &n2);
+
+    }while(n1<0||n2<0);
+    
+    if(n1 == n2*n2){
+      	printf("%d è il quadrato di %d\n\n", n1, n2);
+       }
+	else
+	    printf("%d non è il quadrato di %d\n\n", n1, n2);
+    
+    return 0;
+}
