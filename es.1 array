@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main()
+{
+   int array[4];
+   
+   printf("popola l'array: \n");
+   for(int i=0;i<4;i++){
+       scanf(" %d",&array[i]);
+   }
+   
+   for(int i=0;i<4;i++){
+       printf("%d",array[i]);
+   }
+   
+    return 0;
+}
