@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    int p1, p2, p3, p4, p5;
+
+    p1 = fork(); // Crea il figlio 1
+
+    if (p1 == 0) {
+        printf("Sono il figlio 1, PID: %d, figlio del padre\n", getpid());
+
+        p3 = fork(); // Crea il figlio 3
+        if (p3 == 0) {
+            printf("Sono il figlio 3, PID: %d, figlio del padre figlio 1\n", getpid());
+        } else {
+            p4 = fork(); // Crea il figlio 4
+            if (p4 == 0) {
+                printf("Sono il figlio 4, PID: %d, figlio del padre figlio 1\n", getpid());
+            } else {
+                wait(NULL); // Aspetta i figli 3 e 4
+            }
+        }
+
+    } else {
+        p2 = fork(); // Crea il figlio 2
+        if (p2 == 0) {
+            printf("Sono il figlio 2, PID: %d, figlio del padre\n", getpid());
+
+            p5 = fork(); // Crea il figlio 5
+            if (p5 == 0) {
+                printf("Sono il figlio 5, PID: %d, figlio del padre figlio 2\n", getpid());
+            } else {
+                wait(NULL); // Aspetta il figlio 5
+            }
+
+        } else {
+            wait(NULL); // Aspetta i figli 1 e 2
+            printf("Sono il padre, PID: %d\n", getpid());
+        }
+    }
+
+    return 0;
+}
