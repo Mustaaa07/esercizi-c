@@ -1,0 +1,214 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Persona {
+    char nome[50];
+    char cognome[50];
+    int eta;
+    char codice_fiscale[17];
+    float reddito_annuo;
+    int anno_nascita;
+    char residenza[50];
+};
+
+void mostra_dati(struct Persona individuo) {
+    printf("----- Scheda Anagrafica -----\n");
+    printf("Nome: %s\n", individuo.nome);
+    printf("Cognome: %s\n", individuo.cognome);
+    printf("Età: %d\n", individuo.eta);
+    printf("Codice Fiscale: %s\n", individuo.codice_fiscale);
+    printf("Reddito Annuo: %.2f\n", individuo.reddito_annuo);
+    printf("Anno di Nascita: %d\n", individuo.anno_nascita);
+    printf("Città di Residenza: %s\n", individuo.residenza);
+    printf("-----------------------------\n");
+}
+
+int inserisci_dati(struct Persona elenco[], int max) {
+    int quanti;
+    printf("Quante persone desideri registrare (massimo %d)? ", max);
+    scanf("%d", &quanti);
+    getchar();
+
+    if (quanti > max) quanti = max;
+
+    for (int i = 0; i < quanti; i++) {
+        printf("\n--- Inserisci dati della persona %d ---\n", i + 1);
+        printf("Nome: ");
+        fgets(elenco[i].nome, 50, stdin);
+        elenco[i].nome[strcspn(elenco[i].nome, "\n")] = 0;
+
+        printf("Cognome: ");
+        fgets(elenco[i].cognome, 50, stdin);
+        elenco[i].cognome[strcspn(elenco[i].cognome, "\n")] = 0;
+
+        printf("Età: ");
+        scanf("%d", &elenco[i].eta);
+        getchar();
+
+        printf("Codice Fiscale: ");
+        fgets(elenco[i].codice_fiscale, 17, stdin);
+        elenco[i].codice_fiscale[strcspn(elenco[i].codice_fiscale, "\n")] = 0;
+
+        printf("Reddito annuale (€): ");
+        scanf("%f", &elenco[i].reddito_annuo);
+        getchar();
+
+        printf("Anno di nascita: ");
+        scanf("%d", &elenco[i].anno_nascita);
+        getchar();
+
+        printf("Città di residenza: ");
+        fgets(elenco[i].residenza, 50, stdin);
+        elenco[i].residenza[strcspn(elenco[i].residenza, "\n")] = 0;
+    }
+
+    return quanti;
+}
+
+struct Persona reddito_massimo(struct Persona elenco[], int n) {
+    struct Persona *p = &elenco[0];
+    for (int i = 1; i < n; i++) {
+        if (elenco[i].reddito_annuo > p->reddito_annuo) {
+            p = &elenco[i];
+        }
+    }
+    return *p;
+}
+
+struct Persona reddito_minimo(struct Persona elenco[], int n) {
+    struct Persona *p = &elenco[0];
+    for (int i = 1; i < n; i++) {
+        if (elenco[i].reddito_annuo < p->reddito_annuo) {
+            p = &elenco[i];
+        }
+    }
+    return *p;
+}
+
+void ordina_per_anno(struct Persona elenco[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (elenco[j].anno_nascita < elenco[minIndex].anno_nascita) {
+                minIndex = j;
+            }
+        }
+        if (minIndex != i) {
+            struct Persona temp = elenco[i];
+            elenco[i] = elenco[minIndex];
+            elenco[minIndex] = temp;
+        }
+    }
+}
+
+int cerca_cf(struct Persona elenco[], int n, char codice[]) {
+    for (int i = 0; i < n; i++) {
+        if (strcmp(elenco[i].codice_fiscale, codice) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void mostra_redditi_alti(struct Persona elenco[], int n, float soglia) {
+    for (int i = 0; i < n; i++) {
+        if (elenco[i].reddito_annuo >= soglia) {
+            mostra_dati(elenco[i]);
+        }
+    }
+}
+
+float media_redditi(struct Persona elenco[], int n) {
+    float somma = 0;
+    for (int i = 0; i < n; i++) {
+        somma += elenco[i].reddito_annuo;
+    }
+    return somma / n;
+}
+
+void mostra_anno(struct Persona elenco[], int n, int anno) {
+    for (int i = 0; i < n; i++) {
+        if (elenco[i].anno_nascita == anno) {
+            mostra_dati(elenco[i]);
+        }
+    }
+}
+
+int main() {
+    struct Persona elenco[100];
+    int totale = inserisci_dati(elenco, 100);
+    int scelta;
+
+    do {
+        printf("\n====== MENU PRINCIPALE ======\n");
+        printf("1) Mostra persona con reddito massimo e minimo\n");
+        printf("2) Ordina elenco per anno di nascita\n");
+        printf("3) Ricerca per codice fiscale\n");
+        printf("4) Mostra persone con reddito sopra una soglia\n");
+        printf("5) Calcola la media dei redditi\n");
+        printf("6) Mostra persone nate in un determinato anno\n");
+        printf("0) Esci\n");
+        printf("Seleziona un'opzione: ");
+        scanf("%d", &scelta);
+        getchar();
+
+        switch (scelta) {
+            case 1: {
+                struct Persona max = reddito_massimo(elenco, totale);
+                struct Persona min = reddito_minimo(elenco, totale);
+                printf("\n--- Persona con reddito più alto ---\n");
+                mostra_dati(max);
+                printf("\n--- Persona con reddito più basso ---\n");
+                mostra_dati(min);
+                break;
+            }
+            case 2: {
+                ordina_per_anno(elenco, totale);
+                printf("\n--- Elenco ordinato per anno di nascita ---\n");
+                for (int i = 0; i < totale; i++) mostra_dati(elenco[i]);
+                break;
+            }
+            case 3: {
+                char cf[17];
+                printf("Inserisci il codice fiscale da cercare: ");
+                fgets(cf, 17, stdin);
+                cf[strcspn(cf, "\n")] = 0;
+
+                int posizione = cerca_cf(elenco, totale, cf);
+                if (posizione != -1)
+                    mostra_dati(elenco[posizione]);
+                else
+                    printf("Nessuna corrispondenza trovata.\n");
+                break;
+            }
+            case 4: {
+                float soglia;
+                printf("Inserisci il reddito minimo: ");
+                scanf("%f", &soglia);
+                getchar();
+                mostra_redditi_alti(elenco, totale, soglia);
+                break;
+            }
+            case 5: {
+                float media = media_redditi(elenco, totale);
+                printf("Reddito medio: %.2f euro\n", media);
+                break;
+            }
+            case 6: {
+                int anno;
+                printf("Inserisci l'anno di nascita: ");
+                scanf("%d", &anno);
+                getchar();
+                mostra_anno(elenco, totale, anno);
+                break;
+            }
+            case 0:
+                printf("Chiusura del programma in corso...\n");
+                break;
+            default:
+                printf("Opzione non valida. Riprova.\n");
+        }
+    } while (scelta != 0);
+
+    return 0;
+}
